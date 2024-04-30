@@ -31,3 +31,14 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Custom Classes */
+.bg-main-gradient {
+  background-image: linear-gradient(225deg, rgba(247, 248, 251, .7), rgba(241, 240, 253, .7) 14%, rgba(250, 233, 245, .7) 33%, rgba(238, 234, 252, .7) 42%, rgba(193, 233, 253, .7) 57%, rgba(247, 248, 251, .7) 70%, rgba(228, 230, 253, .7) 79%, rgba(247, 248, 251, .7) 100%, rgba(247, 248, 251, .7));
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
