@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Content Builder
+
+Content Builder is a web-based platform powered by AI to enhance digital content creation across various media forms. It provides tools for video dubbing, content summarization, and audio transcription, making it an invaluable asset for educators, content creators, businesses, and accessibility advocates.
+
+## Features
+
+Content Builder offers three main services:
+
+- **Video Dubbing**: Enhance your videos by adding voice-over in multiple languages. Perfect for reaching a broader audience in their native language without losing the original video's nuances.
+
+- **Content Summary**: Quickly summarize long articles, documents, or videos. Ideal for students and professionals who need to grasp key points without going through the entire content.
+
+- **Content Transcription**: Convert spoken language into written text from your videos or audio recordings. Enhances accessibility and makes the content searchable and more consumable.
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+What you need to install the software:
+
+```bash
+node.js
+npm or yarn
+```
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/content-builder.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd content-builder
+```
+
+Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+```
+
+Start the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Navigate through the platform and select the service you require:
+- For Video Dubbing, upload your video file and select the target language.
+- For Content Summary, upload your text or video file to receive a summarized version.
+- For Content Transcription, upload your audio or video file to get a textual transcription.
 
-## Learn More
+## Running Tests
 
-To learn more about Next.js, take a look at the following resources:
+Explain how to run the automated tests for this system.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm test
+# or
+yarn test
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+Add additional notes about how to deploy this on a live system.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Built With
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Next.js](https://nextjs.org/) - The web framework used
+- [OpenAI API](https://www.openai.com/) - AI services for processing media
+- [React](https://reactjs.org/) - Frontend library
