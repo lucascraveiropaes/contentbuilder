@@ -1,20 +1,19 @@
 "use client";
 import React, { useState } from "react";
-import useFilesWithPreview, { EnhancedFile } from "hooks/preview";
+import useFilesWithPreview from "hooks/preview";
 import { FaArrowRight, FaTrash } from "react-icons/fa";
+import { compressFiles } from "utils/compress";
 import { useDropzone } from "react-dropzone";
 import { formatBytes } from "utils/client";
 
 interface FilePickerProps {
-  onSubmit: (files: EnhancedFile[]) => void;
+  onSubmit: (files: Blob) => void;
 }
 
 const FilePicker: React.FC<FilePickerProps> = ({ onSubmit }) => {
-  const [ acceptedFiles, setAcceptedFiles ] = useState([]);
+  const [acceptedFiles, setAcceptedFiles] = useState<Blob[]>([]);
 
-  const onDrop: any = (files: []) => {
-    setAcceptedFiles(files)
-  };
+  const onDrop: any = async (files: File[]) => setAcceptedFiles(files);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -35,7 +34,7 @@ const FilePicker: React.FC<FilePickerProps> = ({ onSubmit }) => {
     if (newFiles.length === 0) setAcceptedFiles([]);
   };
 
-  const handleNext = () => onSubmit(files);
+  const handleNext = async () => onSubmit(await compressFiles(files));
 
   return (
     <section className="flex flex-col w-full gap-6 items-center px-8">

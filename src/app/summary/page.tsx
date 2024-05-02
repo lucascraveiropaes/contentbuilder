@@ -1,28 +1,23 @@
 "use client"
-import axios from "axios";
-import type { EnhancedFile } from "hooks/preview";
+import { useRouter } from "next/navigation";
 import FilePicker from "components/filepicker";
 import Header from "components/header";
+import axios from "axios";
 
 export default function Home() {
-  // fileToHash
+  const router = useRouter()
 
-  const onSubmit = async (files: EnhancedFile[]) => {
+  const onSubmit = async (zip: Blob) => {
     const formData = new FormData();
-
-    files.forEach(file => {
-      if (file.name)
-        formData.append("files[]", file, file.name);
-    });
+    formData.append("zip", zip);
 
     try {
-      const response = await axios.post("/api/transcriptions", formData);
+      const { status, data: { data }} = await axios.post("/api/transcriptions", formData);
 
-      if (response.status === 200) {
-        console.log("Success: ", response);
-      } else {
-        throw new Error(`Server responded with status: ${response.status}`);
-      }
+      if (status === 200)
+        return router.push(`/summary/${data.id}`);
+
+      throw new Error(`Server responded with status: ${status}`);
     } catch (error) {
       console.error("Error during file upload:", error);
     }

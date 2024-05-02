@@ -5,7 +5,7 @@ export interface EnhancedFile extends File {
   preview: string;
 }
 
-const useFilesWithPreview = (acceptedFiles: File[]): [EnhancedFile[], Dispatch<SetStateAction<EnhancedFile[]>>] => {
+const useFilesWithPreview = (acceptedFiles: Blob[]): [EnhancedFile[], Dispatch<SetStateAction<EnhancedFile[]>>] => {
   const [filesWithPreview, setFilesWithPreview] = useState<EnhancedFile[]>([]);
 
   useEffect(() => {
