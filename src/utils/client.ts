@@ -42,3 +42,20 @@ function bufferToHex(buffer: Buffer) {
       .map(b => b.toString(16).padStart(2, "0"))
       .join("");
 };
+
+export function fileToDownloadFromText(text: string) {
+  const blob = new Blob([text], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+
+  console.log(url);
+
+  const downloadLink = document.createElement("a");
+  downloadLink.href = url;
+  downloadLink.download = "file-content.txt";
+
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+
+  document.body.removeChild(downloadLink);
+  URL.revokeObjectURL(url);
+}

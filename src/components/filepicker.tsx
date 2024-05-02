@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import useFilesWithPreview from "hooks/preview";
 import { FaArrowRight, FaTrash } from "react-icons/fa";
 import { compressFiles } from "utils/compress";
@@ -12,6 +12,7 @@ interface FilePickerProps {
 
 const FilePicker: React.FC<FilePickerProps> = ({ onSubmit }) => {
   const [acceptedFiles, setAcceptedFiles] = useState<Blob[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const onDrop: any = async (files: File[]) => setAcceptedFiles(files);
 
@@ -34,7 +35,10 @@ const FilePicker: React.FC<FilePickerProps> = ({ onSubmit }) => {
     if (newFiles.length === 0) setAcceptedFiles([]);
   };
 
-  const handleNext = async () => onSubmit(await compressFiles(files));
+  const handleNext = async () => {
+    setLoading(true);
+    return onSubmit(await compressFiles(files))
+  };
 
   return (
     <section className="flex flex-col w-full gap-6 items-center px-8">
@@ -75,7 +79,13 @@ const FilePicker: React.FC<FilePickerProps> = ({ onSubmit }) => {
 
       {(hasFiles && !isLoading) && (
         <button onClick={ handleNext } className="flex-center gap-3 bg-main text-white/90 text-lg font-medium p-2.5 px-6 rounded transition-all hover:shadow-lg hover:text-white">
-          Next <FaArrowRight />
+          {(loading) ? (
+            "Sendig files..."
+          ) : (
+            <>
+              Next <FaArrowRight />
+            </>
+          )}
         </button>
       )}
     </section>
