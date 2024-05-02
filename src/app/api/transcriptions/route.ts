@@ -27,6 +27,7 @@ export async function POST(request: Request) {
 
           return await FileManager.insert({
             hash: hash,
+            name: file.name,
             upload_date: new Date(),
             status: "Completed",
             transcription: transcription,

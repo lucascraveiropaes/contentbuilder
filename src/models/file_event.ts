@@ -14,6 +14,7 @@ class FileEventManager {
       INSERT INTO file_events (file_id, event_id) VALUES ${files.map(file => {
         return `('${file.id}', '${event.id}')`;
       }).join(', ')}
+      RETURNING *;
     `;
 
     await sql.query(query);

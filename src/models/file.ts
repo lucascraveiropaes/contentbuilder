@@ -3,6 +3,7 @@ import { sql } from "@vercel/postgres";
 export interface FileType {
   id?: string;
   hash: string;
+  name: string;
   upload_date: Date;
   status: string;
   transcription: string;
@@ -14,8 +15,9 @@ class FileManager {
   async insert(file: FileType): Promise<FileType | null> {
     try {
       const { rows }: any = await sql`
-        INSERT INTO files (hash, upload_date, status, transcription, summary, dubbed)
-        VALUES (${file.hash}, ${file.upload_date.toISOString()}, ${file.status}, ${file.transcription}, ${file.summary}, ${file.dubbed})
+        INSERT INTO files (hash, name, upload_date, status, transcription, summary, dubbed)
+        VALUES (${file.hash}, ${file.name}, ${file.upload_date.toISOString()}, ${file.status}, ${file.transcription}, ${file.summary}, ${file.dubbed})
+        RETURNING *;
       `;
 
       if (rows.length > 0)
