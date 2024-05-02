@@ -13,21 +13,31 @@ export interface FileType {
 
 class FileManager {
   async insert(file: FileType): Promise<FileType | null> {
-    try {
-      const { rows }: any = await sql`
-        INSERT INTO files (hash, name, upload_date, status, transcription, summary, dubbed)
-        VALUES (${file.hash}, ${file.name}, ${file.upload_date.toISOString()}, ${file.status}, ${file.transcription}, ${file.summary}, ${file.dubbed})
-        RETURNING *;
-      `;
+    const { rows }: any = await sql`
+      INSERT INTO files (hash, name, upload_date, status, transcription, summary, dubbed)
+      VALUES (${file.hash}, ${file.name}, ${file.upload_date.toISOString()}, ${file.status}, ${file.transcription}, ${file.summary}, ${file.dubbed})
+      RETURNING *;
+    `;
 
-      if (rows.length > 0)
-        return rows[0] as FileType;
+    return rows[0] as FileType;
+  }
 
-      return null;
-    } catch (error) {
-      console.error("Failed to insert file:", error);
-      return null;
-    }
+  async update(file: FileType): Promise<FileType> {
+    const { rows }: any = await sql`
+      UPDATE files
+      SET
+        hash = ${file.hash},
+        name = ${file.name},
+        upload_date = ${file.upload_date.toISOString()},
+        status = ${file.status},
+        transcription = ${file.transcription},
+        summary = ${file.summary},
+        dubbed = ${file.dubbed}
+      WHERE id = ${file.id}
+      RETURNING *;
+    `;
+
+    return rows[0] as FileType;
   }
 }
 

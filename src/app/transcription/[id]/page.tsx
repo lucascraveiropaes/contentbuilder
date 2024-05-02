@@ -7,9 +7,9 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <main className="flex flex-col justify-center items-center h-[85%]">
-      <Header title="Content Summary" subtitle="Download the summary of your files"/>
+      <Header title="Content Transcription" subtitle="Download the transcription of your files"/>
 
-      <FileView event={ event } keyAccess="summary"/>
+      <FileView event={ event } keyAccess="transcription"/>
     </main>
   );
 }

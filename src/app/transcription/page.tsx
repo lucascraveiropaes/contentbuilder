@@ -12,10 +12,10 @@ export default function Home() {
     formData.append("zip", zip);
 
     try {
-      const { status, data: { data }} = await axios.post("/api/summary", formData);
+      const { status, data: { data }} = await axios.post("/api/transcriptions", formData);
 
       if (status === 200)
-        return router.push(`/summary/${data.id}`);
+        return router.push(`/transcription/${data.id}`);
 
       throw new Error(`Server responded with status: ${status}`);
     } catch (error) {
@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col justify-center items-center h-[85%]">
-      <Header title="Content Summary" subtitle="Select a file to upload and click next"/>
+      <Header title="Content Transcription" subtitle="Select a file to upload and click next"/>
 
       <div className="flex flex-row w-full gap-10 justify-center items-center mt-8">
         <FilePicker onSubmit={ onSubmit }/>

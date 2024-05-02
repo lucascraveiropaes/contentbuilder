@@ -19,7 +19,14 @@ interface TranscriptionOptions {
   onUploadProgress?: (progressEvent: ProgressEvent) => void;
 }
 
-export const createTranscription = async (options: TranscriptionOptions) => {
+interface CompletionOptions {
+  model: string;
+  messages: { role: string; content: string }[];
+  maxTokens?: number;
+  temperature?: number;
+}
+
+export async function createTranscription(options: TranscriptionOptions) {
   const formData = new FormData();
   formData.append("file", options.file);
   formData.append("model", options.model);
@@ -34,17 +41,56 @@ export const createTranscription = async (options: TranscriptionOptions) => {
 
   const config: AxiosRequestConfig = {
     headers: {
-      'Content-Type': 'multipart/form-data'
+      "Content-Type": "multipart/form-data"
     },
     onUploadProgress: options.onUploadProgress as any
   };
 
   try {
-    const response = await OpenaiAPI.post('/audio/transcriptions', formData, config);
+    const response = await OpenaiAPI.post("/audio/transcriptions", formData, config);
     return response.data;
   } catch (error) {
-    console.error('Error requesting transcription:', error);
+    console.error("Error requesting transcription:", error);
     throw error;
   }
 
+};
+
+export async function createSummary(input: string) {
+  const { choices: [{ message }]} = await createCompletion({
+    model: "gpt-4",
+    messages: [{
+      "role": "user",
+      "content": "Summarize the following content, keeping the summary in the same language of the original content."
+    }, {
+      "role": "user",
+      "content": input
+    }],
+  });
+
+  return message.content;
+}
+
+export async function createCompletion(options: CompletionOptions) {
+  try {
+    const data: any = {
+      model: options.model,
+      messages: options.messages,
+      max_tokens: options.maxTokens,
+      temperature: options.temperature
+    };
+
+    // Remove undefined keys
+    Object.keys(data).forEach(key => data[key] === undefined && delete data[key]);
+
+    const { data: response } = await OpenaiAPI.post("/chat/completions", data, {
+      headers: { "Content-Type": "application/json" }
+    });
+
+    return response;
+  } catch (error) {
+    console.error("Error requesting completion:");
+    console.log(JSON.stringify(error, null, 2))
+    throw error;
+  }
 };

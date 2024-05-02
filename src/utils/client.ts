@@ -43,15 +43,13 @@ function bufferToHex(buffer: Buffer) {
       .join("");
 };
 
-export function fileToDownloadFromText(text: string) {
+export function fileToDownloadFromText(name: string, text: string) {
   const blob = new Blob([text], { type: "text/plain" });
   const url = URL.createObjectURL(blob);
 
-  console.log(url);
-
   const downloadLink = document.createElement("a");
   downloadLink.href = url;
-  downloadLink.download = "file-content.txt";
+  downloadLink.download = name + ".txt";
 
   document.body.appendChild(downloadLink);
   downloadLink.click();
