@@ -25,13 +25,13 @@ export function DataProvider<T>({ data, reducer, ...props }: DataProviderProps<T
 }
 
 DataProvider.defaultProps = {
-  data: {}, // Defina o estado inicial padrão aqui
+  data: {},
 }
 
 export function useData<T>(): [T, Dispatch<Action>] {
   const context = useContext(Context);
   if (context === null) {
-    throw new Error("useData must be used within a DataProvider");
+    throw new Error('useData must be used within a DataProvider');
   }
   const { state, dispatch } = context;
   return [state, dispatch];

@@ -4,7 +4,7 @@ interface ErrorProps {
   statusCode?: number;
 }
 
-const Error: NextPage<ErrorProps> = ({ statusCode }) => {
+export default function Error({ statusCode }: ErrorProps) {
   return (
     <section className="flex w-full h-[80%] items-center justify-center">
       <p>
@@ -20,5 +20,3 @@ Error.getInitialProps = async ({ res, err }: NextPageContext): Promise<ErrorProp
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
   return { statusCode };
 }
-
-export default Error;
