@@ -1,14 +1,15 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
+import useFilesWithPreview, { EnhancedFile } from "hooks/preview";
 import { FaArrowRight, FaTrash } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
 import { formatBytes } from "utils/client";
-import useFilesWithPreview from "hooks/preview";
 
 interface FilePickerProps {
+  onSubmit: (files: EnhancedFile[]) => void;
 }
 
-const FilePicker: React.FC<FilePickerProps> = (props) => {
+const FilePicker: React.FC<FilePickerProps> = ({ onSubmit }) => {
   const [ acceptedFiles, setAcceptedFiles ] = useState([]);
 
   const onDrop: any = (files: []) => {
@@ -34,9 +35,11 @@ const FilePicker: React.FC<FilePickerProps> = (props) => {
     if (newFiles.length === 0) setAcceptedFiles([]);
   };
 
+  const handleNext = () => onSubmit(files);
+
   return (
-    <section className="flex flex-col gap-6 items-center px-8">
-      <div className="w-full max-w-[50rem] border-2 border-slate-400 text-slate-600 border-dashed">
+    <section className="flex flex-col w-full gap-6 items-center px-8">
+      <div className="w-full max-w-[50rem] border-2 border-slate-400 text-slate-600 border-dashed rounded-lg">
         {(!hasFiles) && (
           <div {...getRootProps({className: "dropzone flex-center w-full h-[20rem]" })}>
             <input {...getInputProps()} />
@@ -53,7 +56,7 @@ const FilePicker: React.FC<FilePickerProps> = (props) => {
               <div className="grid grid-cols-1 divide-y-2 divide-slate-400 divide-dashed">
                 {files.map((file: any) => (
                   <div key={file.path || file.name} className="flex flex-row items-center gap-4 p-4 hover:bg-black/5">
-                    <img src={file.preview} alt={`preview-${file.name}`} className="w-20 aspect-video rounded"/> {/* Assuming image preview for simplicity */}
+                    <img src={file.preview} alt={`preview-${file.name}`} className="w-20 aspect-video rounded object-contain"/> {/* Assuming image preview for simplicity */}
 
                     <div className="flex flex-col flex-grow min-w-0 gap-1">
                       <p className="truncate flex-grow text-ellipsis overflow-hidden">{file.name}</p>
@@ -72,7 +75,7 @@ const FilePicker: React.FC<FilePickerProps> = (props) => {
       </div>
 
       {(hasFiles && !isLoading) && (
-        <button className="flex-center gap-3 bg-main text-white/90 text-lg font-medium p-2.5 px-6 rounded transition-all hover:shadow-lg hover:text-white">
+        <button onClick={ handleNext } className="flex-center gap-3 bg-main text-white/90 text-lg font-medium p-2.5 px-6 rounded transition-all hover:shadow-lg hover:text-white">
           Next <FaArrowRight />
         </button>
       )}

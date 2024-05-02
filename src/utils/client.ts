@@ -32,4 +32,14 @@ export async function captureVideoFrame (videoSrc: string, fileName: string): Pr
   });
 };
 
-export default captureVideoFrame;
+export async function fileToHash(file: File) {
+  const arrayBuffer = await file.arrayBuffer();
+  const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
+  return bufferToHex(hashBuffer as Buffer);
+};
+
+function bufferToHex(buffer: Buffer) {
+  return Array.from(new Uint8Array(buffer))
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("");
+};
