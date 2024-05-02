@@ -1,5 +1,5 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import captureVideoFrame from "utils/client";
+import { captureVideoFrame } from "utils/client";
 
 export interface EnhancedFile extends File {
   preview: string;
