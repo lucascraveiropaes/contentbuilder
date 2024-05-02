@@ -1,4 +1,4 @@
-import { NextPage, NextPageContext } from 'next';
+import { NextPage, NextPageContext } from "next";
 
 interface ErrorProps {
   statusCode?: number;
@@ -10,7 +10,7 @@ const Error: NextPage<ErrorProps> = ({ statusCode }) => {
       <p>
         {statusCode
           ? `An error ${statusCode} occurred on server`
-          : 'An error occurred on client'}
+          : "An error occurred on client"}
       </p>
     </section>
   );

@@ -34,16 +34,16 @@ export const createTranscription = async (options: TranscriptionOptions) => {
 
   const config: AxiosRequestConfig = {
     headers: {
-      'Content-Type': 'multipart/form-data'
+      "Content-Type": "multipart/form-data"
     },
     onUploadProgress: options.onUploadProgress as any
   };
 
   try {
-    const response = await OpenaiAPI.post('/audio/transcriptions', formData, config);
+    const response = await OpenaiAPI.post("/audio/transcriptions", formData, config);
     return response.data;
   } catch (error) {
-    console.error('Error requesting transcription:', error);
+    console.error("Error requesting transcription:", error);
     throw error;
   }
 
